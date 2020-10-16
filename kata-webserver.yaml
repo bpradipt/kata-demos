@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kata-webserver
+  labels:
+    app: kata-webserver
+  namespace: default
+spec:
+  hostname: kata-webserver
+  containers:
+    - name: kata-webserver
+      image: quay.io/bpradipt/sysinfo
+      ports:
+        - containerPort: 80
+  runtimeClassName: kata-oc
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: kata-webserver-service
+spec:
+  selector:
+    app: kata-webserver
+  ports:
+    - port: 80
+
+---
+
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: kata-webserver-route
+spec:
+  to:
+    kind: Service
+    name: kata-webserver-service
+  tls:
+     termination: edge
