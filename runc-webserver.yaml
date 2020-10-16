@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: runc-webserver
+  labels:
+    app: runc-webserver
+  namespace: default
+spec:
+  containers:
+    - name: runc-webserver
+      image: quay.io/bpradipt/sysinfo
+      ports:
+        - containerPort: 80
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: runc-webserver-service
+spec:
+  selector:
+    app: runc-webserver
+  ports:
+    - port: 80
+
+---
+
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: runc-webserver-route
+spec:
+  to:
+    kind: Service
+    name: runc-webserver-service
+  tls:
+     termination: edge
