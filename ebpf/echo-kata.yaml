@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Pod
+metadata:
+ name: echo-kata
+ labels:
+   app: echo-kata
+ namespace: sample
+spec:
+ containers:
+   - name: echo-kata
+     image: quay.io/bpradipt/http-echo
+     args: [ "-text", "Hello from Kata container", "-listen", ":8080"]
+ runtimeClassName: kata
+
+---
+ 
+kind: Service
+apiVersion: v1
+metadata:
+ name: echo-kata
+ namespace: sample
+spec:
+ selector:
+   app: echo-kata
+ ports:
+   - port: 8080
+
+---
+
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+ name: echo-route
+spec:
+ to:
+   kind: Service
+   name: echo-kata
+   weight: 100   
+ tls:
+    termination: edge
+
