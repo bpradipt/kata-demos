@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sandboxed-builds
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kaniko
+  namespace: sandboxed-builds
+spec:
+  containers:
+  - name: kaniko
+    image: gcr.io/kaniko-project/executor:latest
+    args:
+    - "--context=git://github.com/bpradipt/perf-container.git"
+    - "--dockerfile=Dockerfile"
+    - "--destination=quay.io/bpradipt/kaniko-demo-image:1.0"
+    volumeMounts:
+    - name: kaniko-secret
+      mountPath: /kaniko/.docker
+  restartPolicy: Never
+  runtimeClassName: kata
+  volumes:
+  - name: kaniko-secret
+    secret:
+      secretName: regcred
+      items:
+        - key: .dockerconfigjson
+          path: config.json
+
