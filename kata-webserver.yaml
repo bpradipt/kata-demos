@@ -12,7 +12,7 @@ spec:
       image: quay.io/bpradipt/sysinfo
       ports:
         - containerPort: 80
-  runtimeClassName: kata-oc
+  runtimeClassName: kata
 
 ---
 
