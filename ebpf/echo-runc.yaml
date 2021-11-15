@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+metadata:
+ name: echo-runc
+ labels:
+   app: echo-runc
+ namespace: sample
+spec:
+ containers:
+   - name: echo-runc
+     image: quay.io/bpradipt/http-echo
+     args: [ "-text", "Hello from runc container", "-listen", ":8080"]
+
+---
+ 
+kind: Service
+apiVersion: v1
+metadata:
+ name: echo-runc
+ namespace: sample
+spec:
+ selector:
+   app: echo-runc
+ ports:
+   - port: 8080
+
+---
+
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+ name: echo-route
+spec:
+ to:
+   kind: Service
+   name: echo-runc
+   weight: 100   
+ tls:
+    termination: edge
+

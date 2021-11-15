@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+metadata:
+ name: echo-kata
+ labels:
+   app: echo-kata
+ namespace: sample
+spec:
+ containers:
+   - name: echo-kata
+     image: quay.io/bpradipt/http-echo
+     args: [ "-text", "Hello from Kata container", "-listen", ":8080"]
+   - name: perf-sidecar
+     image: quay.io/bpradipt/perf-amd64:latest
+     imagePullPolicy: IfNotPresent
+     volumeMounts:
+     - name: perf-output
+       mountPath: /out
+     securityContext:
+       privileged: true
+ volumes:
+     - name: perf-output
+       hostPath:
+          path: /run/out
+          type: DirectoryOrCreate
+ ShareProcessNamespace: true  
+ runtimeClassName: kata
+---
+ 
+kind: Service
+apiVersion: v1
+metadata:
+ name: echo-kata
+ namespace: sample
+spec:
+ selector:
+   app: echo-kata
+ ports:
+   - port: 8080
+
