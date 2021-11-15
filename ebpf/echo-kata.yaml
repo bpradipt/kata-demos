@@ -31,6 +31,7 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
  name: echo-route
+ namespace: sample
 spec:
  to:
    kind: Service
