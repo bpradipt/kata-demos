@@ -1,16 +1,10 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: web-sample
----
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
     labels:
         app: echo-kata
     name: echo-kata
-    namespace: web-sample
+    namespace: kata-webserver
 spec:
     replicas: 1
     selector:
@@ -32,7 +26,7 @@ kind: Service
 apiVersion: v1
 metadata:
  name: echo-kata
- namespace: web-sample
+ namespace: kata-webserver
 spec:
  selector:
    app: echo-kata
@@ -45,7 +39,7 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
  name: echo-route
- namespace: web-sample
+ namespace: kata-webserver
 spec:
  to:
    kind: Service
