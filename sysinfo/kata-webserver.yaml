@@ -4,7 +4,7 @@ metadata:
   name: kata-webserver
   labels:
     app: kata-webserver
-  namespace: default
+  namespace: kata-sysinfo
 spec:
   hostname: kata-webserver
   containers:
@@ -20,6 +20,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: kata-webserver-service
+  namespace: kata-sysinfo
 spec:
   selector:
     app: kata-webserver
@@ -32,6 +33,7 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   name: kata-webserver-route
+  namespace: kata-sysinfo
 spec:
   to:
     kind: Service
