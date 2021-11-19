@@ -1,14 +1,8 @@
 apiVersion: v1
-kind: Namespace
-metadata:
-  name: sandboxed-builds
----
-
-apiVersion: v1
 kind: Pod
 metadata:
   name: buildah
-  namespace: sandboxed-builds
+  namespace: kata-builds
 spec:
   runtimeClassName: kata
   containers:
