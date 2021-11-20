@@ -4,7 +4,7 @@ metadata:
  name: echo-debug
  labels:
    app: echo-debug
- namespace: sample
+ namespace: kata-ebpf
 spec:
  containers:
    - name: echo-debug
@@ -30,7 +30,7 @@ kind: Service
 apiVersion: v1
 metadata:
  name: echo-debug
- namespace: sample
+ namespace: kata-ebpf
 spec:
  selector:
    app: echo-debug

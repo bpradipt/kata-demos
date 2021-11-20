@@ -4,7 +4,7 @@ metadata:
  name: echo-kata
  labels:
    app: echo-kata
- namespace: sample
+ namespace: kata-ebpf
 spec:
  containers:
    - name: echo-kata
@@ -23,7 +23,7 @@ spec:
        hostPath:
           path: /run/out
           type: DirectoryOrCreate
- ShareProcessNamespace: true  
+ shareProcessNamespace: true  
  runtimeClassName: kata
 ---
  
@@ -31,7 +31,7 @@ kind: Service
 apiVersion: v1
 metadata:
  name: echo-kata
- namespace: sample
+ namespace: kata-ebpf
 spec:
  selector:
    app: echo-kata
