@@ -1,5 +1,5 @@
 # Introduction
-This demo deploys a simple echo webserver 
+This demo deploys a simple echo webserver.
 The `Route` object is specific to OpenShift clusters.
 
 ## Deployment
@@ -27,4 +27,12 @@ eg. `https://echo-route-kata-webserver.apps.dev.k8s.com`
 ```
 curl -k https://echo-route-kata-webserver.apps.dev.k8s.com
 Hello from Kata container
+```
+
+## Scale the Deployment
+
+Scale the number of replicas to show multiple Kata PODs getting created,
+each POD running within a separate Qemu instance
+```
+kubectl scale --replicas=2 deployment/echo-kata
 ```
