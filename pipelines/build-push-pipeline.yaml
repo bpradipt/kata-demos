@@ -1,0 +1,32 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: build-push
+spec:
+  description: |
+    This pipeline builds a Docker image with Kaniko and
+    pushes it to a registry    
+  params:
+  - name: repo-url
+    type: string
+  - name: image-reference
+    type: string
+  - name: dockerfile
+    type: string
+  workspaces:
+  - name: docker-credentials
+  tasks:
+  - name: build-push
+    taskRef:
+      name: kaniko
+    workspaces:
+    - name: dockerconfig
+      workspace: docker-credentials
+    params:
+    - name: IMAGE
+      value: $(params.image-reference)
+    - name: DOCKERFILE
+      value: $(params.dockerfile)
+    - name: CONTEXT
+      value: $(params.repo-url)
+

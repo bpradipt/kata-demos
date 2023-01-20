@@ -1,0 +1,22 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: build-push-run-kata
+spec:
+  pipelineRef:
+    name: build-push
+  podTemplate:
+    runtimeClassName: kata-remote-cc
+    #runtimeClassName: kata
+  workspaces:  
+  - name: docker-credentials
+    secret:
+      secretName: docker-credentials
+  params:
+  - name: repo-url
+    value: git://github.com/bpradipt/container-build.git
+  - name: image-reference
+    value: quay.io/bpradipt/test-build
+  - name: dockerfile
+    value: Dockerfile
+
