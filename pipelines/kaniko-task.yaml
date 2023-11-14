@@ -29,8 +29,8 @@ spec:
       default: []
     - name: BUILDER_IMAGE
       description: The image on which builds will run (default is v1.5.1)
-      #default: gcr.io/kaniko-project/executor:v1.5.1@sha256:c6166717f7fe0b7da44908c986137ecfeab21f31ec3992f6e128fff8a94be8a5
-      default: gcr.io/kaniko-project/executor:fe2413e6e3c8caf943d50cf1d233a561943df1d6-debug
+      default: gcr.io/kaniko-project/executor:v1.5.1@sha256:c6166717f7fe0b7da44908c986137ecfeab21f31ec3992f6e128fff8a94be8a5
+      #default: gcr.io/kaniko-project/executor:fe2413e6e3c8caf943d50cf1d233a561943df1d6-debug
   workspaces:
     - name: dockerconfig
       description: Includes a docker `config.json`
